@@ -43,6 +43,13 @@ wheels/
 htmlcov/
 .tox/
 
+# Django
+*.sqlite3
+db.sqlite3
+staticfiles/
+media/
+local_settings.py
+
 # Archivos de sistema
 *.log
 .env
