@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Titol dinamic, depenent que es reb-->
+    <title>{% if error %}Error - Personatge no trobat{% elif nom %}{{ nom }}{% elif personatges %}Personatges{% endif %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        h1 {
+            color: #333;
+        }
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .personatges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 220px;
+            padding: 15px;
+            text-align: center;
+        }
+        card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        card h2 {
+            margin: 10px 0;
+            color: #555;
+        }
+        card a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+        .instruccions {
+            margin-top: 40px;
+            text-align: center;
+            color: #666;
+        }
+        
+        .personatge-detail {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .personatge-detail img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .personatge-detail p {
+            color: #555;
+            font-size: 18px;
+        }
+        .personatge-detail a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+        
+        .error-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            justify-content: center;
+        }
+        .error-code {
+            font-size: 72px;
+            color: #FF5733;
+            font-weight: bold;
+            margin: 0;
+        }
+        .error-message {
+            color: #555;
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        .meme {
+            width: 50%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .error-link {
+            text-decoration: none;
+            color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <!--Contingut dinamic depenent que es rep-->
+    {% if error %}
+        <main>
+            <section class="error-container">
+                <h1 class="error-code">404</h1>
+                <p class="error-message">Ho sentim, el personatge que busques no esta aqui.</p>
+                <img class="meme" src="/static/img/error_meme.png" alt="Meme d'error">
+                <br>
+                <a href="/P2_templates/" class="error-link">Tornar a home</a>
+            </section>
+        </main>
+    {% elif nom %}
+        <main>
+            <section class="personatge-detail">
+                <h1>{{ nom }}</h1>
+                <img src="{{ img }}" alt="Imatge de {{ nom }}">
+                <p>"{{ frase }}"</p>
+                <p><a href="/P2_templates/home/">Torna a la pàgina principal</a></p>
+            </section>
+        </main>
+    {% elif personatges %}
+        <header>
+            <h1>Personatges preferits</h1>
+        </header>
+        <main>
+            <section class="personatges">
+            <!--Bucle per mostrar personatges i alguna de la seva informació i imatge.-->
+            {% for personatge in personatges %} 
+                <card>
+                    <img src="{{ personatge.img }}" alt="Imatge de {{ personatge.nom }}">
+                    <h2>{{ personatge.nom }}</h2>
+                    <p><a href="{{ personatge.opcio }}">Frase icónica</a></p>
+                </card>
+            {% endfor %}
+            </section>
+            <section class="instruccions">
+                <h2>Instruccions</h2>
+                <p>Pots fer click als enllaços per obtenir més informació sobre cada personatge.</p>
+                <p>Si introdueixes "home" al url, tornaràs a aquesta pàgina.</p>
+            </section>
+        </main>
+    {% endif %}
+</body>
+</html>
