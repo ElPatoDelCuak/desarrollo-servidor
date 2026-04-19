@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalLibrary | Gestió Bibliotecària</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e293b; /* Slate 800 */
+            --secondary: #64748b; /* Slate 500 */
+            --accent: #3b82f6; /* Blue 500 */
+            --bg: #f8fafc; /* Slate 50 */
+            --border: #e2e8f0; /* Slate 200 */
+            --text: #0f172a; /* Slate 900 */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .navbar {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .hero {
+            margin-bottom: 4rem;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--secondary);
+            max-width: 600px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border);
+            text-align: left;
+            transition: border-color 0.2s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--accent);
+        }
+
+        .stat-label {
+            display: block;
+            color: var(--secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2.25rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .main-actions {
+            background: white;
+            padding: 3rem;
+            border-radius: 1rem;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .action-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-header p {
+            color: var(--secondary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.75rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--text);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--bg);
+            border-color: var(--secondary);
+        }
+
+        footer {
+            margin-top: 6rem;
+            padding-bottom: 4rem;
+            text-align: center;
+            color: var(--secondary);
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 2.25rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">LocalLibrary</a>
+        <div class="nav-links">
+            <a href="/admin/" style="color: var(--secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500;">Administració</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="hero">
+            <h1>Col·lecció de la Biblioteca</h1>
+            <p>Benvingut al sistema de gestió LocalLibrary. Aquí podeu consultar l'estat actual de la vostra col·lecció.</p>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-label">Llibres</span>
+                <span class="stat-value">{{ num_books }}</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Autors</span>
+                <span class="stat-value">{{ num_authors }}</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Còpies Totals</span>
+                <span class="stat-value">{{ num_instances }}</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Disponibles</span>
+                <span class="stat-value" style="color: #16a34a;">{{ num_instances_available }}</span>
+            </div>
+        </section>
+
+        <main class="main-actions">
+            <div class="action-header">
+                <h2>Gestió de Continguts</h2>
+                <p>Accediu directament a les eines d'edició i gestió per mantenir actualitzada la vostra base de dades.</p>
+            </div>
+            <div class="btn-group">
+                <a href="/admin/catalog/book/add/" class="btn btn-primary">Afegir Llibre</a>
+                <a href="/admin/catalog/author/add/" class="btn btn-outline">Nou Autor</a>
+                <a href="/admin/catalog/genre/" class="btn btn-outline">Configurar Gèneres</a>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 LocalLibrary Project &middot; Sistema de Gestió Digital</p>
+        </footer>
+    </div>
+
+</body>
+</html>
