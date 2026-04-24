@@ -206,6 +206,74 @@
             flex-shrink: 0;
         }
 
+        /* Estilos para los desplegables */
+        .dropdown-section {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .dropdown-section[open] {
+            border-color: var(--accent);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-section summary {
+            list-style: none;
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .dropdown-section summary:hover {
+            background-color: var(--bg);
+        }
+
+        .dropdown-section summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .dropdown-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin: 0;
+            color: var(--primary);
+        }
+
+        .dropdown-icon {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-section[open] .dropdown-icon {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-content {
+            padding: 0 2rem 2.5rem 2.5rem;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         footer {
             margin-top: 6rem;
             padding-bottom: 4rem;
@@ -262,24 +330,33 @@
             </div>
         </section>
 
-        <main class="main-actions">
-            <div class="action-header">
+        <details class="dropdown-section">
+            <summary>
                 <h2>Autors</h2>
+                <span class="dropdown-icon">▼</span>
+            </summary>
+            <div class="dropdown-content">
+                <ul>
+                    {% for author in authors %}
+                    <li>{{ author.first_name }} {{ author.last_name }}</li>
+                    {% endfor %}
+                </ul>
             </div>
-            <ul>
-                {% for author in authors %}
-                <li>{{ author.first_name }} {{ author.last_name }}</li>
-                {% endfor %}
-            </ul>
-            <div class="action-header">
+        </details>
+
+        <details class="dropdown-section">
+            <summary>
                 <h2>Llibres</h2>
+                <span class="dropdown-icon">▼</span>
+            </summary>
+            <div class="dropdown-content">
+                <ul>
+                    {% for book in books %}
+                    <li>{{ book.title }}</li>
+                    {% endfor %}
+                </ul>
             </div>
-            <ul>
-                {% for book in books %}
-                <li>{{ book.title }}</li>
-                {% endfor %}
-            </ul>
-        </main>
+        </details>
         <br>
         <main class="main-actions">
             <div class="action-header">
