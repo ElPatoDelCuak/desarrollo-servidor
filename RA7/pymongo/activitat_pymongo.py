@@ -100,7 +100,7 @@ if __name__ == "__main__":
             print(f"Total de documentos: {col.count_documents({})}")
             
             # Recerca global
-            print("\nListado de todos los usuarios:")
+            print("\nLlistat de tots els usuaris:")
             cursor = col.find({})
             for documento in cursor:
                 print(documento)
@@ -111,7 +111,7 @@ if __name__ == "__main__":
             
             #Mostrem els documents amb edat major que 15
             edad_limite = 15
-            print(f"\nBuscando usuarios con edad mayor que {edad_limite} ($gt):")
+            print(f"\nMostrem usuaris amb edat major que {edad_limite} ($gt):")
             usuedat = col.find({"edat": {"$gt": edad_limite}})
             for u in usuedat:
                 print(u)
@@ -125,12 +125,12 @@ if __name__ == "__main__":
             print(f"Documents esborrats (deleted_count): {res_delete.deleted_count}")
             
             if res_delete.deleted_count == 0:
-                print("No se ha borrado ningún registro (tal vez ya no existía).")
+                print("No s'ha esborrat cap registre (tal vegada ja no existia).")
             else:
-                print(f"Registro con ID {id_a_borrar} borrado con éxito.")
+                print(f"Registre amb ID {id_a_borrar} esborrat amb èxit.")
                 
         except PyMongoError as e:
             print(f"Error de conexión o de Mongo en el delete: {e}")
             
     else:
-        print("No se pudo conectar.")
+        print("No s'ha pogut conectar.")
